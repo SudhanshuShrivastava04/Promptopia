@@ -6,18 +6,25 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Navbar = () => {
-  const isUserLoggedIn = true;
+  const { data: session } = useSession();
 
   const [providers, setProviders] = useState(null);
   const [toggleDropDown, settoggleDropDown] = useState(false);
 
   useEffect(() => {
-    const setProviders = async () => {
-      const response = await getProviders();
-
-      setProviders(response);
+    const setUpProviders = async () => {
+      try {
+        const response = await getProviders();
+        console.log("Providers: ", response);
+        setProviders(response);
+      } catch (error) {
+        console.error("Error fetching providers: ", error);
+      }
     };
+
+    setUpProviders();
   }, []);
+
   return (
     <nav className="w-full flex-between mb-16 pt-3">
       <Link href="/" className="flex gap-2 flex-center">
@@ -33,7 +40,7 @@ const Navbar = () => {
 
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Post
@@ -43,7 +50,7 @@ const Navbar = () => {
             </button>
             <Link href="/profile">
               <Image
-                src="/logo.svg"
+                src={session?.user.image}
                 height={37}
                 width={37}
                 alt="profile"
@@ -53,7 +60,7 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            {providers &&
+            {providers ? (
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -63,17 +70,22 @@ const Navbar = () => {
                 >
                   Sign In
                 </button>
-              ))}
+              ))
+            ) : (
+              <div className="flex gap-3">
+                <div className="h-10 w-24 bg-gray-200 rounded-full animate-pulse"></div>
+              </div>
+            )}
           </>
         )}
       </div>
 
       {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
-        {isUserLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
-              src="/logo.svg"
+              src={session?.user.image}
               height={37}
               width={37}
               alt="profile"
@@ -112,7 +124,7 @@ const Navbar = () => {
           </div>
         ) : (
           <>
-            {providers &&
+            {providers ? (
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -122,7 +134,12 @@ const Navbar = () => {
                 >
                   Sign In
                 </button>
-              ))}
+              ))
+            ) : (
+              <div className="flex gap-3">
+                <div className="h-10 w-24 bg-gray-200 rounded-full animate-pulse"></div>
+              </div>
+            )}
           </>
         )}
       </div>
