@@ -73,7 +73,7 @@ const Feed = () => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          className="search_input peer"
+          className="search_input peer rounded-full"
         />
       </form>
 
