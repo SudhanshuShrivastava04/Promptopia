@@ -3,7 +3,7 @@
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useState } from "react";
 
-export default function Typewriter({ text }) {
+const Typewriter = ({ text }) => {
   const count = useMotionValue(0);
 
   const rounded = useTransform(count, (latest) => Math.round(latest));
@@ -32,4 +32,6 @@ export default function Typewriter({ text }) {
       <motion.span>{displayText}</motion.span>
     </p>
   );
-}
+};
+
+export default Typewriter;
