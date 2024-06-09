@@ -137,7 +137,7 @@ const Navbar = () => {
               ))
             ) : (
               <div className="flex gap-3">
-                <div className="h-10 w-24 bg-gray-200 rounded-full animate-pulse"></div>
+                <div className="h-10 w-10 bg-gray-200 rounded-full animate-pulse"></div>
               </div>
             )}
           </>
