@@ -51,7 +51,7 @@ const ProfilePage = () => {
   return (
     <Profile
       name={session?.user.name}
-      desc={session?.user.email}
+      desc="Welcome to your personalized profile page. Share your exceptional prompts and inspire others with the power of your imagination"
       data={allPosts}
       handleEdit={handleEdit}
       handleDelete={handleDelete}
