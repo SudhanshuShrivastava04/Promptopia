@@ -63,7 +63,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             disabled={submitting}
             className="px-5 py-1.5 bg-gradient-to-r from-orange-600 to-yellow-500 transition duration-200 hover:scale-105 rounded-full text-white"
           >
-            {submitting ? `${type}ing` : `${type}`}
+            {submitting ? "loading" : `${type}`}
           </button>
         </div>
       </form>
